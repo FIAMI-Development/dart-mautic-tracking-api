@@ -1,6 +1,6 @@
 library mautic_tracking_api;
 
-import 'dart:io';
+import 'package:universal_io/io.dart';
 
 /// API to User Monitoring and Tracking using Mautic
 class MauticTracking {
