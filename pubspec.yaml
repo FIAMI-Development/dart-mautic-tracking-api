@@ -9,3 +9,4 @@ environment:
 dependencies:
   path: ^1.6.0
   http: ^0.13.0
+  universal_html: ^2.0.8
