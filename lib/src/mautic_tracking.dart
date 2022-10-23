@@ -7,20 +7,18 @@ class MauticTracking {
   /// Constructor
   MauticTracking(
     this._base_url, {
-    this.email,
+    this.userid,
     this.appName,
     this.appVersion,
     this.appBundleName,
     this.closeConnectionAfterRequest = true,
-    this.userAgent =
-        'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.0; Trident/5.0)',
   });
 
   /// Mautic Base URL
   final String _base_url;
 
-  /// Mautic Contact Email
-  final String email;
+  /// Mautic Contact userid
+  final String userid;
 
   /// App Name
   final String appName;
@@ -35,8 +33,6 @@ class MauticTracking {
   /// Use [true] to Close Connection or [false] to make connection opened beetween requests
   final bool closeConnectionAfterRequest;
 
-  /// Request User Agent
-  final String userAgent;
 
   /// Mautic Contact Cookie
   Cookie contactCookie = Cookie('mtc_id', '');
@@ -70,8 +66,8 @@ class MauticTracking {
 
   /// Make Request to Tracking
   Future<void> _makeRequest({Map<String, String> params}) async {
-    if (email != null) {
-      params.addEntries({MapEntry('email', email)});
+    if (userid != null) {
+      params.addEntries({MapEntry('userid', userid)});
     }
 
     if (appBundleName != null) {
@@ -81,12 +77,10 @@ class MauticTracking {
     var _uri = Uri.http(_tracking_url, 'mtracking.gif', params);
 
     var client = HttpClient();
-    client.userAgent = userAgent;
 
     await client.getUrl(_uri).then((HttpClientRequest request) {
       /// Prepare Request
-      request.headers.set('Accept-Language', 'en-us');
-      request.headers.set('Accept-Encoding', 'gzip, deflate');
+      request.headers.set('Accept-Language', 'de');
 
       /// Setting Up Cookies
       if (contactCookie.value.isNotEmpty) {
