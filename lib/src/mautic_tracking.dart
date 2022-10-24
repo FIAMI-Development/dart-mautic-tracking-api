@@ -15,19 +15,19 @@ class MauticTracking {
   });
 
   /// Mautic Base URL
-  final String _base_url;
+  String _base_url;
 
   /// Mautic Contact userid
-  final String userid;
+  String userid;
 
   /// App Name
-  final String appName;
+  String appName;
 
   /// App Version
-  final String appVersion;
+  String appVersion;
 
   /// App Bundle Name
-  final String appBundleName;
+  String appBundleName;
 
   /// Close Connection to Tracking after Request?
   /// Use [true] to Close Connection or [false] to make connection opened beetween requests
