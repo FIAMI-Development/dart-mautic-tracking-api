@@ -14,8 +14,8 @@ typedef ScreenNameExtractor = String Function(RouteSettings settings);
 typedef ScreenPathExtractor = String Function(RouteSettings settings);
 
 String defaultNameExtractor(RouteSettings settings) =>
-    settings.name.split("/").last;
-String defaultPathExtractor(RouteSettings settings) => settings.name;
+    settings.name!.split("/").last;
+String defaultPathExtractor(RouteSettings settings) => settings.name!;
 
 /// [RouteFilter] allows to filter out routes that should not be tracked.
 ///
@@ -72,18 +72,18 @@ class MauticTrackingObserver extends RouteObserver<ModalRoute<dynamic>> {
   /// exception. If `onError` is omitted, the exception will be printed using
   /// `debugPrint()`.
   MauticTrackingObserver({
-    @required this.mautic,
+    required this.mautic,
     this.nameExtractor = defaultNameExtractor,
     this.pathExtractor = defaultPathExtractor,
     this.routeFilter = defaultRouteFilter,
-    Function(PlatformException error) onError,
+    Function(PlatformException error)? onError,
   }) : _onError = onError;
 
   final MauticTracking mautic;
   final ScreenNameExtractor nameExtractor;
   final ScreenPathExtractor pathExtractor;
   final RouteFilter routeFilter;
-  final void Function(PlatformException error) _onError;
+  final void Function(PlatformException error)? _onError;
 
   void _sendScreenView(Route<dynamic> route) {
     final String screenName = nameExtractor(route.settings);
@@ -104,7 +104,7 @@ class MauticTrackingObserver extends RouteObserver<ModalRoute<dynamic>> {
   }
 
   @override
-  void didPush(Route<dynamic> route, Route<dynamic> previousRoute) {
+  void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
     super.didPush(route, previousRoute);
     if (routeFilter(route)) {
       _sendScreenView(route);
@@ -112,7 +112,7 @@ class MauticTrackingObserver extends RouteObserver<ModalRoute<dynamic>> {
   }
 
   @override
-  void didReplace({Route<dynamic> newRoute, Route<dynamic> oldRoute}) {
+  void didReplace({Route<dynamic>? newRoute, Route<dynamic>? oldRoute}) {
     super.didReplace(newRoute: newRoute, oldRoute: oldRoute);
     if (newRoute != null && routeFilter(newRoute)) {
       _sendScreenView(newRoute);
@@ -120,7 +120,7 @@ class MauticTrackingObserver extends RouteObserver<ModalRoute<dynamic>> {
   }
 
   @override
-  void didPop(Route<dynamic> route, Route<dynamic> previousRoute) {
+  void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
     super.didPop(route, previousRoute);
     if (previousRoute != null &&
         routeFilter(previousRoute) &&

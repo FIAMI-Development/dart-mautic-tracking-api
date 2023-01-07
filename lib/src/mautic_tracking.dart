@@ -15,24 +15,23 @@ class MauticTracking {
   });
 
   /// Mautic Base URL
-  String _base_url;
+  String? _base_url;
 
   /// Mautic Contact userid
-  String userid;
+  String? userid;
 
   /// App Name
-  String appName;
+  String? appName;
 
   /// App Version
-  String appVersion;
+  String? appVersion;
 
   /// App Bundle Name
-  String appBundleName;
+  String? appBundleName;
 
   /// Close Connection to Tracking after Request?
   /// Use [true] to Close Connection or [false] to make connection opened beetween requests
   final bool closeConnectionAfterRequest;
-
 
   /// Mautic Contact Cookie
   Cookie contactCookie = Cookie('mtc_id', '');
@@ -44,12 +43,12 @@ class MauticTracking {
   Cookie deviceCookie = Cookie('mtc_device_id', '');
 
   /// Mautic Tracking gif URL
-  String get _tracking_url => parseURL(_base_url);
+  String? get _tracking_url => parseURL(_base_url);
 
   /// Parse a URL [_url] and return authority domain
-  String parseURL(String _url) {
+  String? parseURL(String? _url) {
     return _url
-        .replaceAllMapped(RegExp('http(s)?:\/\/'), (match) {
+        ?.replaceAllMapped(RegExp('http(s)?:\/\/'), (match) {
           return '';
         })
         .replaceAll('/', '')
@@ -65,16 +64,16 @@ class MauticTracking {
   }
 
   /// Make Request to Tracking
-  Future<void> _makeRequest({Map<String, String> params}) async {
+  Future<void> _makeRequest({Map<String, String>? params}) async {
     if (userid != null) {
-      params.addEntries({MapEntry('userid', userid)});
+      params?.addEntries({MapEntry('userid', userid!)});
     }
 
     if (appBundleName != null) {
-      params.addEntries({MapEntry('page_referrer', appBundleName)});
+      params?.addEntries({MapEntry('page_referrer', appBundleName!)});
     }
 
-    var _uri = Uri.http(_tracking_url, 'mtracking.gif', params);
+    var _uri = Uri.http(_tracking_url!, 'mtracking.gif', params);
 
     var client = HttpClient();
 
@@ -143,7 +142,7 @@ class MauticTracking {
   /// // Send Screen Path and Timeline Name
   /// trackScreen('view_contact', 'View Contact Info');
   /// ```
-  Future<void> trackScreen(String screenPath, [String screenName]) async {
+  Future<void> trackScreen(String screenPath, [String? screenName]) async {
     if (screenName == null) {
       await _makeRequest(
         params: {
@@ -180,7 +179,7 @@ class MauticTracking {
     String eventKey,
     String eventName,
     String screenPath, [
-    String screenName,
+    String? screenName,
   ]) async {
     if (screenName == null) {
       await _makeRequest(
