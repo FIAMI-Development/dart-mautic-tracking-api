@@ -5,7 +5,7 @@ void main() async {
   var m = MauticTracking(
     "https://mautic.example.com",
     appName: "MyApp",
-    userid: "contact@email.com",
+    userid: "fzwrBG4GP4rCJqmgg7liEDgKMce8",
     appVersion: '1.0.0',
     appBundleName: 'com.mydomain.myapp',
   );
@@ -14,11 +14,13 @@ void main() async {
   await m.trackAppStart();
 
   /// Track App Screen
-  m.trackScreen("main", "Main Page");
+  //m.trackScreen("main", "Main Page");
 
   /// Track App Event
-  m.trackEvent('click', 'Click Get Start Button', 'home', 'Home Page');
+  //m.trackEvent('click', 'Click Get Start Button', 'home', 'Home Page');
 
   /// Add Contact Tag
-  m.addTag({'a', 'b'});
+  //m.addTag({'a', 'b'});
+
+  print("Done");
 }

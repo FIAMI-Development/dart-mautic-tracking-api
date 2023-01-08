@@ -72,8 +72,14 @@ class MauticTracking {
     if (appBundleName != null) {
       params?.addEntries({MapEntry('page_referrer', appBundleName!)});
     }
-
-    var _uri = Uri.http(_tracking_url!, 'mtracking.gif', params);
+    var _uri;
+    if (_base_url != null && _base_url!.startsWith("https")) {
+      _uri = Uri.https(_tracking_url!, 'mtracking.gif', params);
+    } else if (_base_url!.startsWith("http")) {
+      _uri = Uri.http(_tracking_url!, 'mtracking.gif', params);
+    } else {
+      throw HttpException("Mautic url invalid");
+    }
 
     var client = HttpClient();
 
